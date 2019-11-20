@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pan.bbs">
+
+	<select id="bbsList" parameterType="Map" resultType="pan.bbs.model.BbsDTO">
+		<!-- select * from jian_qna order by cidx desc -->
+		select * from
+		(select rownum as rnum,a.* from
+		(select * from jian_bbs order by category asc, writedate desc)a)b
+		where rnum<![CDATA[>=]]>#{start} and rnum<![CDATA[<=]]>#{end}
+	</select>
+	
+	<select id="total" resultType="int">
+		select count(*) from jian_bbs
+	</select>
+	
+	<insert id="bbsWrite" parameterType="pan.bbs.model.BbsDTO">
+		insert into jian_bbs values(seq_jian_bbs_cidx.nextval,#{category},#{writer},#{id},#{title},#{content},#{mainimg},#{subimg1},#{subimg2},#{subimg3},sysdate)
+	</insert>
+	
+	<select id="bbsDetail" parameterType="int" resultType="pan.bbs.model.BbsDTO">
+		select * from jian_bbs where cidx=#{cidx}
+	</select>
+	
+	<update id="bbsModify" parameterType="pan.bbs.model.BbsDTO">
+		update jian_bbs set category=#{category}, title=#{title}, content=#{content}, mainimg=#{mainimg}, subimg1=#{subimg1}, subimg2=#{subimg2}, subimg3=#{subimg3} where cidx=#{cidx}
+	</update>
+	
+	<delete id="bbsDel" parameterType="int">
+		delete from jian_bbs where cidx=#{cidx}
+	</delete>
+	
+	<select id="myTotal" parameterType="String" resultType="int">
+		select count(*) from jian_bbs where id=#{id}
+	</select>
+	
+	<select id="myBbsList" parameterType="Map" resultType="pan.bbs.model.BbsDTO">
+		select * from
+		(select rownum as rnum,a.* from
+		(select * from jian_bbs where id=#{id} order by writedate desc)a)b
+		where rnum<![CDATA[>=]]>#{start} and rnum<![CDATA[<=]]>#{end}
+	</select>
+	
+</mapper>  

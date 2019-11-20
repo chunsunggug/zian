@@ -1,0 +1,73 @@
+CREATE TABLE jian_member(
+	idx NUMBER PRIMARY KEY,
+	id varchar2(50),
+	pwd varchar2(20),
+	name varchar2(20),
+	phone NUMBER,
+	quiz varchar2(100),
+	answer varchar2(100),
+	grade NUMBER
+)
+
+CREATE SEQUENCE seq_member_idx
+START WITH 1
+INCREMENT BY 1
+
+CREATE TABLE jian_bbs(
+	cidx NUMBER PRIMARY KEY,
+	category varchar2(20),
+	writer varchar2(20),
+	id varchar2(100),
+	title varchar2(500),
+	content varchar2(4000),
+	mainimg varchar2(100),
+	subimg1 varchar2(100),
+	subimg2 varchar2(100),
+	subimg3 varchar2(100),
+	writedate DATE
+)
+
+CREATE SEQUENCE seq_jian_bbs_cidx
+START WITH 1
+INCREMENT BY 1
+
+CREATE TABLE jian_qna(
+	cidx NUMBER PRIMARY KEY,
+	writer varchar2(20),
+	id varchar2(100),
+	title varchar2(500),
+	content varchar2(4000),
+	writedate DATE
+)
+
+CREATE SEQUENCE seq_jian_qna_ridx
+START WITH 1
+INCREMENT BY 1
+
+CREATE TABLE jian_reply(
+	ridx NUMBER PRIMARY KEY,
+	cidx NUMBER,
+	bcdix NUMBER,
+	reple varchar2(4000),
+	writedate DATE,
+	writer varchar2(100)
+)
+
+CREATE SEQUENCE seq_jian_reply_ridx
+START WITH 1
+INCREMENT BY 1
+
+CREATE TABLE JIAN_PERSON(
+   pidx NUMBER PRIMARY KEY,
+   name varchar2(500),
+   part varchar2(500),
+   casting varchar2(500),
+   career varchar2(500),
+   snslink varchar2(500),
+   frontprof varchar2(2000),
+   backprof varchar2(2000)
+);
+
+CREATE SEQUENCE seq_JIAN_PERSON_pidx
+START WITH 1
+INCREMENT BY 1;

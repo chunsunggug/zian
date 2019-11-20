@@ -1,0 +1,5 @@
+/** Your theme modifications here **/
+ 	#file li{
+	display: inline-block;
+	width: 250px;
+	}

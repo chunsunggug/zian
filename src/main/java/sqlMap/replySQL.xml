@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pan.reply">
+
+	<insert id="qnaReplyWrite" parameterType="pan.reply.model.ReplyDTO">
+		insert into jian_reply values(seq_jian_reply_ridx.nextval,#{cidx},0,#{reple},sysdate,#{writer})
+	</insert>
+	
+	<insert id="bbsReplyWrite" parameterType="pan.reply.model.ReplyDTO">
+		insert into jian_reply values(seq_jian_reply_ridx.nextval,0,#{bcdix},#{reple},sysdate,#{writer})
+	</insert>
+
+	<select id="qnaReplyList" parameterType="int" resultType="pan.reply.model.ReplyDTO">
+		select * from jian_reply where cidx=#{cidx} order by writedate asc
+	</select>
+	
+	<select id="bbsReplyList" parameterType="Map" resultType="pan.reply.model.ReplyDTO">
+		select * from
+		(select rownum as rnum,a.* from
+		(select * from jian_reply where bcdix=#{cidx} order by writedate asc)a)b
+		where rnum<![CDATA[>=]]>#{start} and rnum<![CDATA[<=]]>#{end}
+	</select>
+
+	<select id="totalBbsReply" parameterType="int" resultType="int">
+		select count(*) from jian_reply where bcdix=#{cidx}
+	</select>
+	
+	<select id="totalQnaReply" parameterType="int" resultType="int">
+		select count(*) from jian_reply where cidx=#{cidx}
+	</select>	
+	
+	<delete id="replyDel" parameterType="String">
+		delete from jian_reply where writer=#{writer}
+	</delete>
+	
+</mapper>  

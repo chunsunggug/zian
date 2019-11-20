@@ -1,0 +1,66 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@include file="/WEB-INF/views/00_header.jsp" %>
+<%@include file="/WEB-INF/views/10_topbar.jsp" %>
+<%@include file="/WEB-INF/views/20_navbar.jsp" %>
+	<div id="all">
+
+        <div id="content">
+            <div class="container">
+
+                <div class="col-md-12">
+
+                    <ul class="breadcrumb">
+                        <li><a href="#">Home</a>
+                        </li>
+                        <li>문의사항</li>
+                    </ul>
+
+                </div>
+
+                <div class="col-md-12">
+                    <div class="box">
+                        <h1>문의하기</h1>
+                        <p class="lead">Change your personal details or your password here.</p>
+                        <p class="text-muted">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+                        <form name="qnaWrite" action="qnaWrite.do" method="post">
+                            <div class="row">
+                                <div class="col-sm-9">
+                                    <div class="form-group">
+                                        <label for="password_1">제목</label>
+                                        <input type="text" name="title" class="form-control" id="password_1">
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="password_2">작성자</label>
+                                        <input type="text" name="writer" class="form-control" id="password_2" value="${sname }" readonly="readonly">
+                                        <input type="hidden" name="id" value="${sid }">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="password_old">문의사항</label>
+                                        <textarea name="content" rows="10" cols="5" name="content" class="form-control" id="password_old"></textarea>
+                                    </div>
+                                </div>
+                             	<div class="col-sm-12 text-center">
+                                	<button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> 등록</button>
+                          		</div>
+                            </div>
+                            <!-- /.row -->
+
+
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.container -->
+        </div>
+        <!-- /#content -->
+    </div>
+<%@include file="/WEB-INF/views/90_footer.jsp" %>

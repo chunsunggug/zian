@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pan.member">
+	<insert id="memberInsert" parameterType="pan.member.model.MemberDTO">
+		insert into jian_member values(seq_member_idx.nextval,#{id},#{pwd},#{name},#{phone},#{quiz},#{answer},3)
+	</insert>
+
+	<select id="idCheck" parameterType="String" resultType="String">
+		select id from jian_member where id=#{id} <!-- 값이 한개라서 아무거나 써도됨 ex)aa -->
+	</select>
+	
+	<select id="loginCheck" parameterType="String" resultType="String"> <!-- 비밀번호 검증 -->
+		select pwd from jian_member where id=#{id}
+	</select>
+	
+	<select id="userimfo" parameterType="String"  resultType="pan.member.model.MemberDTO"> <!-- 사용자 이름 부르기 -->
+		select name,phone,quiz,answer,grade from jian_member where id=#{userid}
+	</select>
+	
+	<update id="modifyImfo" parameterType="pan.member.model.MemberDTO">
+		update jian_member set phone=#{phone}, quiz=#{quiz}, answer=#{answer}, pwd=#{pwd} where id=#{id}		
+	</update>
+	
+	<select id="totalmember" resultType="int">
+		select count(*) from jian_member
+	</select>
+	
+	<select id="memberList" parameterType="Map" resultType="pan.member.model.MemberDTO">
+		<!-- select * from jian_qna order by cidx desc -->
+		select * from
+		(select rownum as rnum,a.* from
+		(select * from jian_member order by idx)a)b
+		where rnum<![CDATA[>=]]>#{start} and rnum<![CDATA[<=]]>#{end}
+	</select>
+	
+	<delete id="memberDel" parameterType="int">
+		delete from jian_member where idx=#{idx}
+	</delete>
+	
+	<select id="findQuiz" parameterType="String" resultType="String">
+		select quiz from jian_member where id=#{id}
+	</select>
+	
+	<select id="findPwd" parameterType="String" resultType="String">
+		select pwd from jian_member where answer=#{answer}
+	</select>
+</mapper>  

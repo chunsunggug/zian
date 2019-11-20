@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pan.qna">
+
+	<select id="qnaList" parameterType="Map" resultType="pan.qna.model.QnaDTO">
+		<!-- select * from jian_qna order by cidx desc -->
+		select * from
+		(select rownum as rnum,a.* from
+		(select * from jian_qna order by writedate desc)a)b
+		where rnum<![CDATA[>=]]>#{start} and rnum<![CDATA[<=]]>#{end}
+	</select>
+	
+	<insert id="qnaWrite" parameterType="pan.qna.model.QnaDTO">
+		insert into jian_qna values(seq_jian_qna_ridx.nextval,#{writer},#{id},#{title},#{content},sysdate,0)
+	</insert>
+	
+	<select id="qnaDetail" parameterType="int" resultType="pan.qna.model.QnaDTO">
+		select * from jian_qna where cidx=#{cidx}
+	</select>
+	
+	<select id="totalmyCnt" parameterType="String" resultType="int">
+		select count(*) from jian_qna where id=#{id}
+	</select>
+	
+	<select id="totalCnt" parameterType="String" resultType="int">
+		select count(*) from jian_qna
+	</select>	
+	
+	<update id="qnaModify" parameterType="pan.qna.model.QnaDTO">
+		update jian_qna set title=#{title}, content=#{content} where cidx=#{cidx}
+	</update>
+	
+	<delete id="qnaDel" parameterType="int">
+		delete from jian_qna where cidx=#{cidx}
+	</delete>
+	
+	<select id="myQnaList" parameterType="Map" resultType="pan.qna.model.QnaDTO">
+		select * from
+		(select rownum as rnum,a.* from
+		(select * from jian_qna where id=#{id} order by writedate desc)a)b
+		where rnum<![CDATA[>=]]>#{start} and rnum<![CDATA[<=]]>#{end}
+	</select>
+	
+	<update id="statusUpdate" parameterType="Map">
+		update jian_qna set status=#{status} where cidx=#{cidx}
+	</update>
+	
+</mapper>  

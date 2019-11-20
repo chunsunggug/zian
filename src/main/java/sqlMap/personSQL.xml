@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pan.person">
+
+	<select id="personList" resultType="pan.person.model.PersonDTO">
+		select * from JIAN_PERSON order by part,pidx
+	</select>
+	<insert id="personInsert" parameterType="pan.person.model.PersonDTO">
+		INSERT INTO JIAN_PERSON 
+		VALUES(seq_jian_person_pidx.nextval,
+		#{name},#{part},#{casting},#{career},#{snslink},#{frontprof},#{backprof})
+	</insert>
+	<delete id="personDelete" parameterType="int">
+		DELETE FROM JIAN_PERSON WHERE pidx=#{pidx}
+	</delete>
+	<select id="personListButy" resultType="pan.person.model.PersonDTO">
+		select * from JIAN_PERSON WHERE part='Beautyful' order by part,pidx
+	</select>
+	<select id="personListRomance" resultType="pan.person.model.PersonDTO">
+		select * from JIAN_PERSON WHERE part='Romance' order by part,pidx
+	</select>
+</mapper>  
